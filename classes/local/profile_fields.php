@@ -54,7 +54,10 @@ class profile_fields {
      * first so a student request is only a value write.
      */
     public static function ensure(): void {
-        global $DB;
+        global $CFG, $DB;
+
+        // Plugin install runs before Moodle has included the profile field API.
+        require_once($CFG->dirroot . '/user/profile/lib.php');
 
         $categoryid = self::category_id();
         $sortorder = (int) $DB->get_field_sql('SELECT COALESCE(MAX(sortorder), 0) FROM {user_info_field}');
@@ -73,7 +76,7 @@ class profile_fields {
                 'sortorder' => $sortorder,
                 'required' => 0,
                 'locked' => 0,
-                'visible' => PROFILE_VISIBLE_NONE,
+                'visible' => \PROFILE_VISIBLE_NONE,
                 'forceunique' => 0,
                 'signup' => 0,
                 'defaultdata' => '',

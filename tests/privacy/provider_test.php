@@ -31,6 +31,25 @@ use core_privacy\local\request\writer;
  */
 final class provider_test extends \advanced_testcase {
     /**
+     * The metadata names the profile fields and the optional YouTube embed.
+     *
+     * @covers ::get_metadata
+     */
+    public function test_metadata_lists_youtube(): void {
+        $collection = provider::get_metadata(new \core_privacy\local\metadata\collection('block_vibecheck'));
+        $items = [];
+        foreach ($collection->get_collection() as $item) {
+            $items[$item->get_name()] = $item;
+        }
+        $this->assertArrayHasKey('core_user', $items);
+        $this->assertArrayHasKey('youtube.com', $items);
+        $youtube = $items['youtube.com'];
+        $this->assertInstanceOf(\core_privacy\local\metadata\types\external_location::class, $youtube);
+        $this->assertSame('privacy:metadata:youtube', $youtube->get_summary());
+        $this->assertSame('privacy:metadata:youtube:embedurl', $youtube->get_privacy_fields()['embedurl']);
+    }
+
+    /**
      * Export and delete the rating stored for one user.
      *
      * @covers ::get_contexts_for_userid

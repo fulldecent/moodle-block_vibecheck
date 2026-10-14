@@ -1,9 +1,9 @@
 # Study companion
 
-[![Lint](https://github.com/modern-training-solutions/moodle-block_vibecheck/actions/workflows/lint.yml/badge.svg)](https://github.com/modern-training-solutions/moodle-block_vibecheck/actions/workflows/lint.yml)
-[![Build and test](https://github.com/modern-training-solutions/moodle-block_vibecheck/actions/workflows/build-test.yml/badge.svg)](https://github.com/modern-training-solutions/moodle-block_vibecheck/actions/workflows/build-test.yml)
-[![Moodle CI](https://github.com/modern-training-solutions/moodle-block_vibecheck/actions/workflows/ci.yml/badge.svg)](https://github.com/modern-training-solutions/moodle-block_vibecheck/actions/workflows/ci.yml)
-[![Moodle compatibility](https://github.com/modern-training-solutions/moodle-block_vibecheck/actions/workflows/moodle-compatibility.yml/badge.svg)](https://github.com/modern-training-solutions/moodle-block_vibecheck/actions/workflows/moodle-compatibility.yml)
+[![Lint](https://github.com/fulldecent/moodle-block_vibecheck/actions/workflows/lint.yml/badge.svg)](https://github.com/fulldecent/moodle-block_vibecheck/actions/workflows/lint.yml)
+[![Build and test](https://github.com/fulldecent/moodle-block_vibecheck/actions/workflows/build-test.yml/badge.svg)](https://github.com/fulldecent/moodle-block_vibecheck/actions/workflows/build-test.yml)
+[![Moodle CI](https://github.com/fulldecent/moodle-block_vibecheck/actions/workflows/ci.yml/badge.svg)](https://github.com/fulldecent/moodle-block_vibecheck/actions/workflows/ci.yml)
+[![Moodle compatibility](https://github.com/fulldecent/moodle-block_vibecheck/actions/workflows/moodle-compatibility.yml/badge.svg)](https://github.com/fulldecent/moodle-block_vibecheck/actions/workflows/moodle-compatibility.yml)
 
 Students get a focus timer, a breathing exercise, a theme switch, and a once-a-year rating after every enrolled course is complete.
 
@@ -33,7 +33,7 @@ Run a Moodle site with this block on your own computer. These commands are copie
 4. Install the block into that Moodle tree.
 
     ```bash
-    git clone https://github.com/modern-training-solutions/moodle-block_vibecheck.git moodle/public/blocks/vibecheck
+    git clone https://github.com/fulldecent/moodle-block_vibecheck.git moodle/public/blocks/vibecheck
     ```
 
     Moodle 5.2 serves plugins from `public/blocks`.
@@ -57,7 +57,7 @@ The zip from the releases page unpacks to a single `vibecheck` directory. In Moo
 To install from git, from the Moodle root on 5.2:
 
 ```bash
-git clone https://github.com/modern-training-solutions/moodle-block_vibecheck.git public/blocks/vibecheck
+git clone https://github.com/fulldecent/moodle-block_vibecheck.git public/blocks/vibecheck
 ```
 
 Open the site. Moodle's notifications page installs the plugin. Upgrade from the copy that lived inside `local_mts_hacks` with the blocks symlink `blocks/vibecheck`. Replace that symlink with this directory before you visit the notifications page. The component name is unchanged, so existing ratings in the `VIBE_RATING` and `VIBE_UPDATED_AT` profile fields stay put.
@@ -68,7 +68,7 @@ Add the block from the blocks drawer on a course page or the dashboard.
 
 The rating question is shown only when every course the user is enrolled in has a completion time, and the user has not saved a rating in the last twelve 30-day months. Good and bad call the web service `block_vibecheck_update_vibe`.
 
-The focus timer, breathing exercise, background colour, and dark mode stay in the browser. Lofi radio loads a YouTube embed only after the student turns it on.
+The focus timer, breathing exercise, background colour, and dark mode stay in the browser. Lofi radio loads a YouTube embed only after the student turns it on. The privacy API lists that address as an external location. The timer, the breathing exercise, the theme, and the rating all work with lofi radio left off. No YouTube account or API key is required.
 
 The setting is at Site administration > Plugins > Blocks > Study companion. `block_vibecheck/force_drawer` opens the Boost blocks drawer when the block is on the page. Production left that behaviour on. Turn it off when the drawer should stay under the student's control.
 
@@ -86,11 +86,13 @@ Pull requests run [ci.yml](.github/workflows/ci.yml). On a Mac with Apple contai
 testing/run-tests.sh
 ```
 
-Format the files that workflow does not cover before you push:
+Format and check the files that workflow does not cover before you push. Prettier writes CSS with four-space indentation, which is what Moodle's stylelint expects. These are the same commands [lint.yml](.github/workflows/lint.yml) runs:
 
 ```bash
-npx prettier@latest --write .
+npx prettier@latest --check . --write
 npx markdownlint-cli@latest "**/*.md" --fix
+node testing/check-css-indent.mjs
+node testing/check-lang.mjs
 ```
 
 PHP syntax is checked by [build-test.yml](.github/workflows/build-test.yml), which also builds `vibecheck.zip`.

@@ -56,6 +56,11 @@ class provider implements
             'timecreated' => 'privacy:metadata:vibecheck:timecreated',
         ], 'privacy:metadata:vibecheck');
 
+        // The server does not send the rating. The browser loads this embed after the student opts in.
+        $collection->add_external_location_link('youtube.com', [
+            'embedurl' => 'privacy:metadata:youtube:embedurl',
+        ], 'privacy:metadata:youtube');
+
         return $collection;
     }
 

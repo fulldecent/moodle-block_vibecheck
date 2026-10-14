@@ -100,8 +100,8 @@ final class eligibility_test extends \advanced_testcase {
         $this->setUser($user);
 
         $hidden = $this->render_block();
-        $this->assertStringContainsString('Start Pomodoro Timer', $hidden->text);
-        $this->assertStringContainsString('Start Breathing Exercise', $hidden->text);
+        $this->assertStringContainsString('Start Pomodoro timer', $hidden->text);
+        $this->assertStringContainsString('Start breathing exercise', $hidden->text);
         $this->assertStringNotContainsString('data-rating="GOOD"', $hidden->text);
         $this->assertStringContainsString('data-force-drawer="1"', $hidden->text);
 
