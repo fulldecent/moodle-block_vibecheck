@@ -6,16 +6,17 @@
 # https://marketplace.moodle.com/account/security
 # and save it as the Actions secret MOODLE_MARKETPLACE_TOKEN.
 #
-# A release created by release.yml uses the Actions token, and that token
-# does not start this workflow. release.yml calls the same reusable workflow
-# after it publishes.
+# The first listing is uploaded by hand from the release zip. This workflow
+# submits a later version, after the plugin exists and MOODLE_MARKETPLACE_TOKEN
+# is set. A release created by release.yml uses the Actions token, and that
+# token does not start this workflow.
 
 name: Release Plugin version to Moodle Marketplace
 
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
   workflow_dispatch:
     inputs:
       tag:
