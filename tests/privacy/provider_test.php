@@ -42,8 +42,8 @@ final class provider_test extends \advanced_testcase {
             $items[$item->get_name()] = $item;
         }
         $this->assertArrayHasKey('core_user', $items);
-        $this->assertArrayHasKey('youtube.com', $items);
-        $youtube = $items['youtube.com'];
+        $this->assertArrayHasKey('www.youtube-nocookie.com', $items);
+        $youtube = $items['www.youtube-nocookie.com'];
         $this->assertInstanceOf(\core_privacy\local\metadata\types\external_location::class, $youtube);
         $this->assertSame('privacy:metadata:youtube', $youtube->get_summary());
         $this->assertSame('privacy:metadata:youtube:embedurl', $youtube->get_privacy_fields()['embedurl']);

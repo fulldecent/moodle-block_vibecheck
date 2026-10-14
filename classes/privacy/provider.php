@@ -57,7 +57,7 @@ class provider implements
         ], 'privacy:metadata:vibecheck');
 
         // The server does not send the rating. The browser loads this embed after the student opts in.
-        $collection->add_external_location_link('youtube.com', [
+        $collection->add_external_location_link('www.youtube-nocookie.com', [
             'embedurl' => 'privacy:metadata:youtube:embedurl',
         ], 'privacy:metadata:youtube');
 
