@@ -1,0 +1,34 @@
+# Submit a tagged version to the Moodle Marketplace.
+#
+# https://github.com/moodlehq/moodle-plugin-release
+#
+# One-time setup: create an API token at
+# https://marketplace.moodle.com/account/security
+# and save it as the Actions secret MOODLE_MARKETPLACE_TOKEN.
+#
+# A release created by release.yml uses the Actions token, and that token
+# does not start this workflow. release.yml calls the same reusable workflow
+# after it publishes.
+
+name: Release Plugin version to Moodle Marketplace
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Tag to be released (e.g. v1.4.0)
+        required: true
+        type: string
+
+jobs:
+  release-to-marketplace:
+    permissions:
+      contents: read
+    uses: moodlehq/moodle-plugin-release/.github/workflows/moodle-release.yml@main
+    with:
+      tag: ${{ inputs.tag }}
+    secrets:
+      MOODLE_MARKETPLACE_TOKEN: ${{ secrets.MOODLE_MARKETPLACE_TOKEN }}

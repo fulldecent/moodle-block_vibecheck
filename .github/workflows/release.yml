@@ -165,3 +165,17 @@ jobs:
         run: |
           gh api -X DELETE "repos/$GITHUB_REPOSITORY/issues/$PR/labels/autorelease:%20pending"
           gh api "repos/$GITHUB_REPOSITORY/issues/$PR/labels" -f "labels[]=autorelease: tagged"
+
+  marketplace:
+    name: Release to Moodle Marketplace
+    needs: [propose, publish]
+    if: |
+      always() &&
+      needs.publish.result == 'success'
+    permissions:
+      contents: read
+    uses: moodlehq/moodle-plugin-release/.github/workflows/moodle-release.yml@main
+    with:
+      tag: ${{ inputs.tag || needs.propose.outputs.tag_name }}
+    secrets:
+      MOODLE_MARKETPLACE_TOKEN: ${{ secrets.MOODLE_MARKETPLACE_TOKEN }}
