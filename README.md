@@ -68,7 +68,7 @@ Add the block from the blocks drawer on a course page or the dashboard.
 
 The rating question is shown only when every course the user is enrolled in has a completion time, and the user has not saved a rating in the last twelve 30-day months. Good and bad call the web service `block_vibecheck_update_vibe`.
 
-The focus timer, breathing exercise, background colour, and dark mode stay in the browser. Lofi radio loads a YouTube embed only after the student turns it on.
+The focus timer, breathing exercise, background colour, and dark mode stay in the browser. Lofi radio loads a YouTube embed only after the student turns it on. The privacy API lists that address as an external location. The timer, the breathing exercise, the theme, and the rating all work with lofi radio left off. No YouTube account or API key is required.
 
 The setting is at Site administration > Plugins > Blocks > Study companion. `block_vibecheck/force_drawer` opens the Boost blocks drawer when the block is on the page. Production left that behaviour on. Turn it off when the drawer should stay under the student's control.
 
