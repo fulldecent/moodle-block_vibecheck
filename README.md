@@ -92,6 +92,7 @@ Format and check the files that workflow does not cover before you push. Prettie
 npx prettier@latest --check . --write
 npx markdownlint-cli@latest "**/*.md" --fix
 node testing/check-css-indent.mjs
+node testing/check-lang.mjs
 ```
 
 PHP syntax is checked by [build-test.yml](.github/workflows/build-test.yml), which also builds `vibecheck.zip`.

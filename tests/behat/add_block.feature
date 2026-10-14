@@ -13,6 +13,6 @@ Feature: Add the study companion block
 
   Scenario: The block shows the focus and zen tools
     When I add the "Study companion" block
-    Then I should see "Start Pomodoro Timer"
-    And I should see "Start Breathing Exercise"
+    Then I should see "Start Pomodoro timer"
+    And I should see "Start breathing exercise"
     And I should see "I need a boost!"

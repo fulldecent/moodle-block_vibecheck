@@ -35,3 +35,7 @@ jobs:
       - name: Check CSS indentation
         # Moodle's Grunt stylelint wants four-space CSS. Prettier writes it. This rejects a drift back to two spaces.
         run: node testing/check-css-indent.mjs
+
+      - name: Check English sentence case
+        # The language pack is sentence case except for proper nouns and the plugin name.
+        run: node testing/check-lang.mjs
