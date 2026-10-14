@@ -73,7 +73,7 @@ class profile_fields {
                 'sortorder' => $sortorder,
                 'required' => 0,
                 'locked' => 0,
-                'visible' => PROFILE_VISIBLE_NONE,
+                'visible' => \PROFILE_VISIBLE_NONE,
                 'forceunique' => 0,
                 'signup' => 0,
                 'defaultdata' => '',
