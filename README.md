@@ -1,9 +1,9 @@
 # Study companion
 
-[![Lint](https://github.com/modern-training-solutions/moodle-block_vibecheck/actions/workflows/lint.yml/badge.svg)](https://github.com/modern-training-solutions/moodle-block_vibecheck/actions/workflows/lint.yml)
-[![Build and test](https://github.com/modern-training-solutions/moodle-block_vibecheck/actions/workflows/build-test.yml/badge.svg)](https://github.com/modern-training-solutions/moodle-block_vibecheck/actions/workflows/build-test.yml)
-[![Moodle CI](https://github.com/modern-training-solutions/moodle-block_vibecheck/actions/workflows/ci.yml/badge.svg)](https://github.com/modern-training-solutions/moodle-block_vibecheck/actions/workflows/ci.yml)
-[![Moodle compatibility](https://github.com/modern-training-solutions/moodle-block_vibecheck/actions/workflows/moodle-compatibility.yml/badge.svg)](https://github.com/modern-training-solutions/moodle-block_vibecheck/actions/workflows/moodle-compatibility.yml)
+[![Lint](https://github.com/fulldecent/moodle-block_vibecheck/actions/workflows/lint.yml/badge.svg)](https://github.com/fulldecent/moodle-block_vibecheck/actions/workflows/lint.yml)
+[![Build and test](https://github.com/fulldecent/moodle-block_vibecheck/actions/workflows/build-test.yml/badge.svg)](https://github.com/fulldecent/moodle-block_vibecheck/actions/workflows/build-test.yml)
+[![Moodle CI](https://github.com/fulldecent/moodle-block_vibecheck/actions/workflows/ci.yml/badge.svg)](https://github.com/fulldecent/moodle-block_vibecheck/actions/workflows/ci.yml)
+[![Moodle compatibility](https://github.com/fulldecent/moodle-block_vibecheck/actions/workflows/moodle-compatibility.yml/badge.svg)](https://github.com/fulldecent/moodle-block_vibecheck/actions/workflows/moodle-compatibility.yml)
 
 Students get a focus timer, a breathing exercise, a theme switch, and a once-a-year rating after every enrolled course is complete.
 
@@ -33,7 +33,7 @@ Run a Moodle site with this block on your own computer. These commands are copie
 4. Install the block into that Moodle tree.
 
     ```bash
-    git clone https://github.com/modern-training-solutions/moodle-block_vibecheck.git moodle/public/blocks/vibecheck
+    git clone https://github.com/fulldecent/moodle-block_vibecheck.git moodle/public/blocks/vibecheck
     ```
 
     Moodle 5.2 serves plugins from `public/blocks`.
@@ -57,7 +57,7 @@ The zip from the releases page unpacks to a single `vibecheck` directory. In Moo
 To install from git, from the Moodle root on 5.2:
 
 ```bash
-git clone https://github.com/modern-training-solutions/moodle-block_vibecheck.git public/blocks/vibecheck
+git clone https://github.com/fulldecent/moodle-block_vibecheck.git public/blocks/vibecheck
 ```
 
 Open the site. Moodle's notifications page installs the plugin. Upgrade from the copy that lived inside `local_mts_hacks` with the blocks symlink `blocks/vibecheck`. Replace that symlink with this directory before you visit the notifications page. The component name is unchanged, so existing ratings in the `VIBE_RATING` and `VIBE_UPDATED_AT` profile fields stay put.
