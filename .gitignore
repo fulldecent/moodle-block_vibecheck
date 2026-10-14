@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+
+# Secrets. .env.example is the committed sample.
+.env
+.env.*
+!.env.example
+
+# Local copy of the release zip.
+/dist/
+
+# moodle-plugin-ci writes this into the plugin while it builds the suite.
+/phpunit.xml
+/phpunit.xml.bak
+/.phpunit.cache/

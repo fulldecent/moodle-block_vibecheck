@@ -1,0 +1,47 @@
+# PHP runtime for Moodle plugin CI. Apple container builds this. Docker is not required.
+FROM php:8.3-cli-bookworm
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        git \
+        unzip \
+        curl \
+        ca-certificates \
+        postgresql-client \
+        default-jre-headless \
+        libpq-dev \
+        libzip-dev \
+        libicu-dev \
+        libpng-dev \
+        libjpeg62-turbo-dev \
+        libxml2-dev \
+        locales \
+    && docker-php-ext-configure gd --with-jpeg \
+    && docker-php-ext-install -j"$(nproc)" pgsql pdo_pgsql intl zip gd soap exif opcache \
+    && printf 'en_AU.UTF-8 UTF-8\n' >> /etc/locale.gen \
+    && locale-gen \
+    && rm -rf /var/lib/apt/lists/*
+
+# Moodle 5.2 Grunt requires Node >= 22.11 and < 23. Debian's nodejs package is 18.
+ARG NODE_VERSION=22.20.0
+RUN curl -fsSL "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-arm64.tar.gz" -o /tmp/node.tar.gz \
+    && tar -xzf /tmp/node.tar.gz -C /usr/local --strip-components=1 \
+    && rm /tmp/node.tar.gz \
+    && node --version \
+    && npm --version
+
+RUN printf '%s\n' \
+        'max_input_vars=5000' \
+        'memory_limit=512M' \
+        'date.timezone=UTC' \
+        'opcache.enable=1' \
+        'opcache.enable_cli=1' \
+        > /usr/local/etc/php/conf.d/moodle.ini
+
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+ENV COMPOSER_ALLOW_SUPERUSER=1 \
+    LANG=en_AU.UTF-8 \
+    LC_ALL=en_AU.UTF-8
+
+WORKDIR /ci

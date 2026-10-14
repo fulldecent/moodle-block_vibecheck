@@ -1,0 +1,385 @@
+{{!
+    @template block_vibecheck/content
+
+    Study companion block body.
+
+    Example context (json):
+    {
+        "showrating": true,
+        "wwwroot": "https://example.com",
+        "sesskey": "abc",
+        "forcedrawer": "1",
+        "instanceid": "vibecheck1"
+    }
+}}
+<div class="block-vibecheck-container block-studyvibe-container"
+     id="block-vibecheck-{{instanceid}}"
+     data-region="vibecheck-root"
+     data-wwwroot="{{wwwroot}}"
+     data-sesskey="{{sesskey}}"
+     data-force-drawer="{{forcedrawer}}"
+     data-label-start="{{#str}}starttimer, block_vibecheck{{/str}}"
+     data-label-pause="{{#str}}paused, block_vibecheck{{/str}}"
+     data-label-resume="{{#str}}resumefocus, block_vibecheck{{/str}}"
+     data-label-done="{{#str}}timerdone, block_vibecheck{{/str}}"
+     data-label-breathe-start="{{#str}}startbreathing, block_vibecheck{{/str}}"
+     data-label-breathe-stop="{{#str}}stopbreathing, block_vibecheck{{/str}}"
+     data-label-inhale="{{#str}}breatheinhale, block_vibecheck{{/str}}"
+     data-label-exhale="{{#str}}breatheexhale, block_vibecheck{{/str}}"
+     data-label-ready="{{#str}}breatheready, block_vibecheck{{/str}}">
+    <ul class="nav nav-tabs justify-content-center" data-region="vibecheck-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#vibecheck-focus-{{instanceid}}" type="button" role="tab">{{#str}}focus, block_vibecheck{{/str}}</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#vibecheck-zen-{{instanceid}}" type="button" role="tab">{{#str}}zen, block_vibecheck{{/str}}</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#vibecheck-vibe-{{instanceid}}" type="button" role="tab">{{#str}}vibe, block_vibecheck{{/str}}</button>
+        </li>
+    </ul>
+    <div class="tab-content vibe-tab-content">
+        <div class="tab-pane fade show active" id="vibecheck-focus-{{instanceid}}" role="tabpanel">
+            <div class="timer-display" data-region="timer-display">25:00</div>
+            <button class="btn btn-sm btn-primary mb-3" type="button" data-action="timer-toggle">{{#str}}starttimer, block_vibecheck{{/str}}</button>
+            <hr>
+            <div class="form-check form-switch d-flex justify-content-center align-items-center">
+                <input class="form-check-input me-2" type="checkbox" data-action="lofi-toggle" id="vibecheck-lofi-{{instanceid}}">
+                <label class="form-check-label" for="vibecheck-lofi-{{instanceid}}"><small>{{#str}}lofi, block_vibecheck{{/str}}</small></label>
+            </div>
+            <div class="lofi-player mt-2" data-region="lofi-player">
+                <iframe class="vibecheck-lofi-frame" title="{{#str}}lofi, block_vibecheck{{/str}}" data-src="https://www.youtube-nocookie.com/embed/jfKfPfyJRdk" src="about:blank"></iframe>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="vibecheck-zen-{{instanceid}}" role="tabpanel">
+            <button class="btn btn-sm btn-outline-success" type="button" data-action="breathe">{{#str}}startbreathing, block_vibecheck{{/str}}</button>
+            <div class="breathe-circle is-hidden" data-region="breathe-circle">{{#str}}breatheready, block_vibecheck{{/str}}</div>
+        </div>
+        <div class="tab-pane fade" id="vibecheck-vibe-{{instanceid}}" role="tabpanel">
+            {{#showrating}}
+            <div class="mb-3" data-region="rating">
+                <div class="vibecheck-question">{{#str}}question, block_vibecheck{{/str}}</div>
+                <div class="vibecheck-buttons" data-region="rating-buttons">
+                    <button type="button" class="vibecheck-btn vibecheck-good" data-action="rate" data-rating="GOOD">👍</button>
+                    <button type="button" class="vibecheck-btn vibecheck-bad" data-action="rate" data-rating="BAD">👎</button>
+                </div>
+                <div class="vibecheck-thankyou" data-region="thankyou" hidden>{{#str}}thankyou, block_vibecheck{{/str}}</div>
+            </div>
+            <hr>
+            {{/showrating}}
+            <p class="mb-2 text-muted"><small>{{#str}}systemtheme, block_vibecheck{{/str}}</small></p>
+            <div class="form-check form-switch d-flex justify-content-center align-items-center mb-3">
+                <input class="form-check-input me-2" type="checkbox" data-action="dark-mode" id="vibecheck-dark-{{instanceid}}">
+                <label class="form-check-label" for="vibecheck-dark-{{instanceid}}">{{#str}}darkmode, block_vibecheck{{/str}}</label>
+            </div>
+            <hr>
+            <p class="mb-2 text-muted"><small>{{#str}}backgroundtheme, block_vibecheck{{/str}}</small></p>
+            <div class="mb-3">
+                <div class="color-dot" style="background-color: #f8f9fa;" data-theme="default" title="{{#str}}themedefault, block_vibecheck{{/str}}"></div>
+                <div class="color-dot" style="background-color: #e3f2fd;" data-theme="blue" title="{{#str}}themeblue, block_vibecheck{{/str}}"></div>
+                <div class="color-dot" style="background-color: #fdf8e3;" data-theme="warm" title="{{#str}}themewarm, block_vibecheck{{/str}}"></div>
+                <div class="color-dot" style="background-color: #e8f5e9;" data-theme="green" title="{{#str}}themegreen, block_vibecheck{{/str}}"></div>
+            </div>
+            <hr>
+            <button class="btn btn-warning w-100 fw-bold" type="button" data-action="boost">{{#str}}boost, block_vibecheck{{/str}}</button>
+        </div>
+    </div>
+</div>
+{{#js}}
+require([], function() {
+    document.querySelectorAll('[data-region="vibecheck-root"]').forEach(function(root) {
+        if (root.dataset.bound === '1') {
+            return;
+        }
+        root.dataset.bound = '1';
+
+        var wwwroot = root.dataset.wwwroot;
+        var sesskey = root.dataset.sesskey;
+        var timeLeft = 25 * 60;
+        var timerInterval = null;
+        var isTimerRunning = false;
+        var breatheInterval = null;
+        var timerDisplay = root.querySelector('[data-region="timer-display"]');
+        var timerBtn = root.querySelector('[data-action="timer-toggle"]');
+        var lofiToggle = root.querySelector('[data-action="lofi-toggle"]');
+        var lofiPlayer = root.querySelector('[data-region="lofi-player"]');
+        var lofiFrame = lofiPlayer ? lofiPlayer.querySelector('iframe') : null;
+        var breatheBtn = root.querySelector('[data-action="breathe"]');
+        var breatheCircle = root.querySelector('[data-region="breathe-circle"]');
+
+        function trackVibeEvent(eventName, eventParams) {
+            try {
+                window.dataLayer = window.dataLayer || [];
+                if (typeof window.gtag !== 'function') {
+                    window.gtag = function() {
+                        window.dataLayer.push(arguments);
+                    };
+                }
+                eventParams.block = 'study_companion';
+                window.gtag('event', eventName, eventParams);
+            } catch (e) {
+                window.console.log('GA4 event blocked/skipped:', eventName);
+            }
+        }
+
+        root.querySelectorAll('[data-region="vibecheck-tabs"] button[data-bs-toggle="tab"]').forEach(function(tab) {
+            tab.addEventListener('shown.bs.tab', function(e) {
+                trackVibeEvent('vibecheck_tab_view', {tab_name: e.target.innerText.trim()});
+            });
+        });
+
+        function playAlarm() {
+            try {
+                var AudioContext = window.AudioContext || window.webkitAudioContext;
+                var audioCtx = new AudioContext();
+                var oscillator = audioCtx.createOscillator();
+                var gainNode = audioCtx.createGain();
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
+                gainNode.gain.setValueAtTime(1, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.5);
+                oscillator.start(audioCtx.currentTime);
+                oscillator.stop(audioCtx.currentTime + 1.5);
+            } catch (e) {
+                window.console.log('Audio not supported');
+            }
+        }
+
+        function updateTimerDisplay() {
+            var minutes = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+            var seconds = (timeLeft % 60).toString().padStart(2, '0');
+            timerDisplay.textContent = minutes + ':' + seconds;
+        }
+
+        function burst(count) {
+            var canvas = document.createElement('canvas');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            canvas.style.position = 'fixed';
+            canvas.style.inset = '0';
+            canvas.style.pointerEvents = 'none';
+            canvas.style.zIndex = '2000';
+            document.body.appendChild(canvas);
+            var ctx = canvas.getContext('2d');
+            var pieces = [];
+            var i;
+            for (i = 0; i < count; i++) {
+                pieces.push({
+                    x: canvas.width / 2,
+                    y: canvas.height * 0.6,
+                    vx: (Math.random() - 0.5) * 12,
+                    vy: Math.random() * -12 - 2,
+                    color: ['#4caf50', '#ffeb3b', '#e91e63', '#2196f3'][i % 4],
+                    life: 80
+                });
+            }
+            function frame() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                pieces.forEach(function(piece) {
+                    piece.x += piece.vx;
+                    piece.y += piece.vy;
+                    piece.vy += 0.25;
+                    piece.life -= 1;
+                    ctx.fillStyle = piece.color;
+                    ctx.fillRect(piece.x, piece.y, 6, 8);
+                });
+                pieces = pieces.filter(function(piece) {
+                    return piece.life > 0;
+                });
+                if (pieces.length) {
+                    window.requestAnimationFrame(frame);
+                } else {
+                    canvas.remove();
+                }
+            }
+            frame();
+        }
+
+        if (timerBtn) {
+            timerBtn.addEventListener('click', function() {
+                if (isTimerRunning) {
+                    window.clearInterval(timerInterval);
+                    timerBtn.textContent = root.dataset.labelResume;
+                    timerBtn.classList.replace('btn-danger', 'btn-primary');
+                    trackVibeEvent('vibecheck_timer', {action: 'paused', time_left: timerDisplay.textContent});
+                } else {
+                    timerBtn.textContent = root.dataset.labelPause;
+                    timerBtn.classList.replace('btn-primary', 'btn-danger');
+                    trackVibeEvent('vibecheck_timer', {action: 'started', time_left: timerDisplay.textContent});
+                    timerInterval = window.setInterval(function() {
+                        timeLeft -= 1;
+                        updateTimerDisplay();
+                        if (timeLeft <= 0) {
+                            window.clearInterval(timerInterval);
+                            timerDisplay.textContent = root.dataset.labelDone;
+                            timerBtn.hidden = true;
+                            playAlarm();
+                            burst(80);
+                            trackVibeEvent('vibecheck_timer', {action: 'completed'});
+                        }
+                    }, 1000);
+                }
+                isTimerRunning = !isTimerRunning;
+            });
+        }
+
+        if (lofiToggle) {
+            lofiToggle.addEventListener('change', function(e) {
+                var on = e.target.checked;
+                lofiPlayer.classList.toggle('is-on', on);
+                if (on && lofiFrame && lofiFrame.src.indexOf('youtube') === -1) {
+                    lofiFrame.src = lofiFrame.dataset.src;
+                }
+                if (!on && lofiFrame) {
+                    lofiFrame.src = 'about:blank';
+                }
+                trackVibeEvent('vibecheck_lofi', {action: on ? 'on' : 'off'});
+            });
+        }
+
+        if (breatheBtn) {
+            breatheBtn.addEventListener('click', function() {
+                var hidden = breatheCircle.classList.contains('is-hidden');
+                if (hidden) {
+                    breatheCircle.classList.remove('is-hidden');
+                    breatheBtn.textContent = root.dataset.labelBreatheStop;
+                    breatheBtn.classList.replace('btn-outline-success', 'btn-outline-danger');
+                    trackVibeEvent('vibecheck_breathe', {action: 'started'});
+                    var cycle = function() {
+                        breatheCircle.textContent = root.dataset.labelInhale;
+                        breatheCircle.classList.remove('exhale');
+                        breatheCircle.classList.add('inhale');
+                        window.setTimeout(function() {
+                            breatheCircle.textContent = root.dataset.labelExhale;
+                            breatheCircle.classList.remove('inhale');
+                            breatheCircle.classList.add('exhale');
+                        }, 4000);
+                    };
+                    cycle();
+                    breatheInterval = window.setInterval(cycle, 8000);
+                } else {
+                    breatheCircle.classList.add('is-hidden');
+                    breatheBtn.textContent = root.dataset.labelBreatheStart;
+                    breatheBtn.classList.replace('btn-outline-danger', 'btn-outline-success');
+                    window.clearInterval(breatheInterval);
+                    breatheCircle.classList.remove('inhale', 'exhale');
+                    trackVibeEvent('vibecheck_breathe', {action: 'stopped'});
+                }
+            });
+        }
+
+        function applyTheme(theme, isUserAction) {
+            document.body.style.backgroundColor = '';
+            if (theme === 'blue') {
+                document.body.style.backgroundColor = '#e3f2fd';
+            }
+            if (theme === 'warm') {
+                document.body.style.backgroundColor = '#fdf8e3';
+            }
+            if (theme === 'green') {
+                document.body.style.backgroundColor = '#e8f5e9';
+            }
+            window.localStorage.setItem('pmt-study-theme', theme);
+            if (isUserAction) {
+                trackVibeEvent('vibecheck_background_theme', {theme_name: theme});
+            }
+        }
+
+        var savedTheme = window.localStorage.getItem('pmt-study-theme');
+        if (savedTheme) {
+            applyTheme(savedTheme, false);
+        }
+        root.querySelectorAll('.color-dot').forEach(function(dot) {
+            dot.addEventListener('click', function(e) {
+                applyTheme(e.target.dataset.theme, true);
+            });
+        });
+
+        var boostBtn = root.querySelector('[data-action="boost"]');
+        if (boostBtn) {
+            boostBtn.addEventListener('click', function() {
+                burst(60);
+                trackVibeEvent('vibecheck_confetti_boost', {action: 'clicked'});
+            });
+        }
+
+        function updateVibe(rating) {
+            var question = root.querySelector('.vibecheck-question');
+            var buttons = root.querySelector('[data-region="rating-buttons"]');
+            var thankyou = root.querySelector('[data-region="thankyou"]');
+            if (question) {
+                question.hidden = true;
+            }
+            if (buttons) {
+                buttons.hidden = true;
+            }
+            if (thankyou) {
+                thankyou.hidden = false;
+            }
+            trackVibeEvent('vibecheck_nps_rating', {rating_value: rating});
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', wwwroot + '/lib/ajax/service.php?sesskey=' + encodeURIComponent(sesskey));
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify([{
+                index: 0,
+                methodname: 'block_vibecheck_update_vibe',
+                args: {rating: rating}
+            }]));
+            window.setTimeout(function() {
+                window.location.reload();
+            }, 2000);
+        }
+
+        root.querySelectorAll('[data-action="rate"]').forEach(function(button) {
+            button.addEventListener('click', function() {
+                updateVibe(button.dataset.rating);
+            });
+        });
+
+        var darkModeToggle = root.querySelector('[data-action="dark-mode"]');
+        var htmlRoot = document.documentElement;
+        var isDark = window.localStorage.getItem('pmt-dark-mode') === 'true' ||
+            htmlRoot.getAttribute('data-bs-theme') === 'dark';
+        if (isDark) {
+            htmlRoot.setAttribute('data-bs-theme', 'dark');
+            if (darkModeToggle) {
+                darkModeToggle.checked = true;
+            }
+        }
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('change', function(e) {
+                var on = e.target.checked;
+                htmlRoot.setAttribute('data-bs-theme', on ? 'dark' : 'light');
+                window.localStorage.setItem('pmt-dark-mode', on ? 'true' : 'false');
+                trackVibeEvent('vibecheck_darkmode', {action: on ? 'on' : 'off'});
+            });
+        }
+
+        if (root.dataset.forceDrawer === '1') {
+            var attempts = 0;
+            var drawerInterval = window.setInterval(function() {
+                var drawer = document.getElementById('theme_boost-drawers-blocks');
+                if (drawer) {
+                    if (!drawer.classList.contains('show')) {
+                        drawer.classList.remove('closed');
+                        drawer.classList.add('show');
+                        document.body.classList.add('drawer-open-right');
+                        var pageWrapper = document.getElementById('page');
+                        if (pageWrapper) {
+                            pageWrapper.classList.add('drawer-open-right');
+                        }
+                    } else {
+                        window.clearInterval(drawerInterval);
+                    }
+                }
+                attempts += 1;
+                if (attempts > 10) {
+                    window.clearInterval(drawerInterval);
+                }
+            }, 500);
+        }
+    });
+});
+{{/js}}
