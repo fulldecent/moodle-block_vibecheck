@@ -13,3 +13,7 @@ max_line_length = 120
 [*.md]
 trim_trailing_whitespace = false
 max_line_length = off
+
+# Moodle stylelint expects four spaces in stylesheets.
+[*.css]
+indent_size = 4

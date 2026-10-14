@@ -86,11 +86,12 @@ Pull requests run [ci.yml](.github/workflows/ci.yml). On a Mac with Apple contai
 testing/run-tests.sh
 ```
 
-Format the files that workflow does not cover before you push:
+Format and check the files that workflow does not cover before you push. Prettier writes CSS with four-space indentation, which is what Moodle's stylelint expects. These are the same commands [lint.yml](.github/workflows/lint.yml) runs:
 
 ```bash
-npx prettier@latest --write .
+npx prettier@latest --check . --write
 npx markdownlint-cli@latest "**/*.md" --fix
+node testing/check-css-indent.mjs
 ```
 
 PHP syntax is checked by [build-test.yml](.github/workflows/build-test.yml), which also builds `vibecheck.zip`.
