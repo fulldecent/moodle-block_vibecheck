@@ -111,25 +111,9 @@ The file to upload on the first Marketplace listing is `vibecheck.zip` from that
 
 In your GitHub repository settings, under Actions, General, Workflow permissions, select read and write permissions and check "Allow GitHub Actions to create and approve pull requests". Under General, Releases, enable release immutability. Release Please needs the permission. The publish job needs immutability so a release cannot be replaced after it is attested.
 
-A repository created from this work starts with no tags. Release Please reads the latest tag on the default branch. The publish job accepts a tag shaped like `v1.2.3`.
+A repository created from this work starts with no tags. Release Please reads the latest tag on the default branch. The publish job accepts a tag shaped like `v1.2.3`. The starting tag for this repository is `v1.1.0`, which matches `$plugin->release`. `v1.0.0` already shipped inside `local_mts_hacks` and is not a tag here.
 
-Run these commands from a clone of the new repository. `gh` fills in `{owner}/{repo}` from that clone.
-
-List tags:
-
-```bash
-gh api repos/{owner}/{repo}/tags --jq '.[].name'
-```
-
-Set the starting tag on the current `main` commit. `v1.1.0` matches `$plugin->release` in this tree. `v1.0.0` already shipped inside `local_mts_hacks` and is not a tag in this repository. Release Please counts forward from the tag you set.
-
-```bash
-gh api --method POST repos/{owner}/{repo}/git/refs \
-  -f ref="refs/tags/v1.1.0" \
-  -f sha="$(gh api repos/{owner}/{repo}/commits/main --jq .sha)"
-```
-
-`gh release list` and `gh release create` publish the releases this workflow creates after that tag.
+If the first Release Please pull request gets the version wrong, check the Release Please documentation. You may need a configuration option when tags have no `v` prefix, and for other situations.
 
 The zip is packed as `vibecheck/`. Moodle's installer rejects a zip whose top directory does not match the component.
 
@@ -152,9 +136,9 @@ We will not publish the rest of `local_mts_hacks` from this repository. We will 
 ## References
 
 1. We use title case only for proper nouns, including the name of our project.
-2. This project is built based on [best practices documented in moodle-local_plugin_template](https://github.com/fulldecent/moodle-local_plugin_template), release v1.0.1.
-3. This project is built based on [best practices documented in project-template](https://github.com/fulldecent/project-template), release v1.3.0.
-4. [EditorConfig](.editorconfig) and the top of [.gitignore](.gitignore) are taken from project-template release 1.3.0, through that Moodle template. `/dist/` is the local copy of the release zip.
+2. This project is built based on [best practices documented in moodle-local_plugin_template](https://github.com/fulldecent/moodle-local_plugin_template), release v1.0.3.
+3. This project is built based on [best practices documented in project-template](https://github.com/fulldecent/project-template), release v1.4.1.
+4. [EditorConfig](.editorconfig) and the top of [.gitignore](.gitignore) are taken from project-template release v1.4.1, through that Moodle template. `/dist/` is the local copy of the release zip.
 5. The interface files of a Moodle plugin are [GPL-3.0-or-later](https://moodledev.io/general/community/plugincontribution/checklist). [LICENSE.md](LICENSE.md) is that text.
 6. Moodle CI on pull requests is [Catalyst's reusable workflow](https://github.com/catalyst/catalyst-moodle-workflows). Its `pre_job` skips `schedule`. [moodlehq/moodle-plugin-ci](https://github.com/moodlehq/moodle-plugin-ci/issues/323) makes you name each Moodle branch, which is why the monthly workflow discovers the newest stable branch itself.
 7. Local tests use Apple container. The template's playground uses Docker. This repository does not.
